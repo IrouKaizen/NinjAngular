@@ -1,0 +1,53 @@
+En Angular, pour faire une fonction qui permet d'incrémenter, il faut :
+
+1-Créer un service pour le partage de données : Créez un service qui stockera le chiffre et fournira des méthodes pour l'incrémenter.
+ng generate service counter.
+
+2-Mettre en place le service : Ouvrez le fichier counter.service.ts généré et implémentez-le comme suit :
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CounterService {
+  private count: number = 0;
+
+  getCount(): number {
+    return this.count;
+  }
+
+  incrementCount(): void {
+    this.count++;
+  }
+}
+
+3-Utiliser le service dans le composant : Injectez le service dans votre composant (acc.component.ts) où vous voulez afficher le chiffre.
+
+import { Component } from '@angular/core';
+import { CounterService } from '../path-to-counter-service/counter.service';
+
+@Component({
+  selector: 'app-acc',
+  templateUrl: './acc.component.html',
+  styleUrls: ['./acc.component.css']
+})
+export class AccComponent {
+  constructor(private counterService: CounterService) {}
+
+  getCount(): number {
+    return this.counterService.getCount();
+  }
+
+  incrementCount(): void {
+    this.counterService.incrementCount();
+  }
+}
+
+4-Mettre à jour le modèle : Dans votre fichier acc.component.html, utilisez les méthodes du service pour afficher et incrémenter le chiffre.
+
+<div>
+  <p>{{ getCount() }}</p>
+  <button (click)="incrementCount()">Ajout</button>
+</div>
+Cela assure que le chiffre est correctement affiché et incrémenté chaque fois que le bouton est cliqué.
